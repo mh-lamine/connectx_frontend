@@ -1,35 +1,38 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import AddModal from "./components/AddModal";
+import AppointmentsTable from "./components/AppointmentsTable";
+import { Button } from "@/components/ui/button";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [modal, setModal] = useState(false);
 
+  // const toggleAddModal = () => {
+  //   // 
+  //   console.log("toggleAddModal");
+  // };
   return (
-    <>
+    <div className="w-screen p-2">
+      <h1 className="px-16 py-8 text-3xl">ConnectX</h1>
       <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        <h2 className="px-8 text-2xl">Mes prochains rendez-vous</h2>
+        <AppointmentsTable />
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
+      <div
+        className="w-full flex justify-center my-4"
+        onClick={()=>{setModal(!modal);}}
+      >
+        <Button variant="outline">Ajouter un Rendez-vous</Button>
+        {modal && (
+          <div
+            className="absolute top-0 left-0 w-screen h-screen bg-slate-100 flex justify-center items-center bg-opacity-90 z-10"
+            onClick={()=>{setModal(!modal);}}
+          >
+            {<AddModal />}
+          </div>
+        )}
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    </div>
+  );
 }
 
-export default App
+export default App;
