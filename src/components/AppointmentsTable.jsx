@@ -6,21 +6,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 
-export default function AppointmentsTable() {
-  const [appointments, setAppointments] = useState([]);
-
-  const fetchAppointments = async () => {
-    const response = await fetch("http://localhost:3000/appointments");
-    const data = await response.json();
-    setAppointments(data);
-  };
-
-  useEffect(() => {
-    fetchAppointments();
-  }, []);
-
+export default function AppointmentsTable({appointments}) {
+  
   return (
     <div className="p-4">
       <Table>
@@ -35,7 +24,7 @@ export default function AppointmentsTable() {
         <TableBody>
           {appointments.map((appointment) => {
             return (
-              <TableRow key={appointment._id}>
+              <TableRow key={appointment._id} >
                 <TableCell className="font-medium">
                   {appointment.name}
                 </TableCell>
@@ -50,3 +39,7 @@ export default function AppointmentsTable() {
     </div>
   );
 }
+
+AppointmentsTable.propTypes = {
+  appointments: PropTypes.array.isRequired,
+};

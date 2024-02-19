@@ -10,8 +10,9 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { useState } from "react";
+import PropTypes from "prop-types";
 
-export default function AddModal(toggleModal) {
+export default function AddModal({toggleAddModal}) {
   const [field, setField] = useState({ name: "", service: "" });
 
   const handleChange = (e) => {
@@ -37,7 +38,7 @@ export default function AddModal(toggleModal) {
       }
 
       clearFields();
-      toggleModal.toggleModal();
+      toggleAddModal();
     } catch (error) {
       console.error("Error:", error);
     }
@@ -67,7 +68,7 @@ export default function AddModal(toggleModal) {
           variant="outline"
           className="ml-auto"
           onClick={() => {
-            toggleModal.toggleModal();
+            toggleAddModal();
           }}
         >
           Annuler
@@ -76,3 +77,7 @@ export default function AddModal(toggleModal) {
     </Card>
   );
 }
+
+AddModal.propTypes = {
+  toggleAddModal: PropTypes.func.isRequired,
+};
