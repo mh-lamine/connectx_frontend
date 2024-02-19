@@ -1,7 +1,6 @@
 import {
   Table,
   TableBody,
-  //   TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -25,7 +24,6 @@ export default function AppointmentsTable() {
   return (
     <div className="p-4">
       <Table>
-        {/* <TableCaption>A list of your recent invoices.</TableCaption> */}
         <TableHeader>
           <TableRow>
             <TableHead className="w-[100px]">Nom</TableHead>

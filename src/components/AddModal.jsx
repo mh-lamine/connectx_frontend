@@ -9,8 +9,40 @@ import {
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
+import { useState } from "react";
 
-export default function AddModal() {
+export default function AddModal(toggleModal) {
+  const [field, setField] = useState({ name: "", service: "" });
+
+  const handleChange = (e) => {
+    setField({ ...field, [e.target.name]: e.target.value });
+  };
+
+  const clearFields = () => {
+    setField([]);
+  }
+
+  const createApppointment = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/appointments", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(field),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      clearFields();
+      toggleModal.toggleModal();
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   return (
     <Card>
       <CardHeader>
@@ -21,13 +53,23 @@ export default function AddModal() {
       </CardHeader>
       <CardContent>
         <Label>Nom</Label>
-        <Input></Input>
+        <Input name="name" value={field.name} onChange={handleChange}></Input>
         <Label>Service</Label>
-        <Input></Input>
+        <Input
+          name="service"
+          value={field.service}
+          onChange={handleChange}
+        ></Input>
       </CardContent>
       <CardFooter>
-        <Button>Créer</Button>
-        <Button variant="outline" className="ml-auto">
+        <Button onClick={() => createApppointment()}>Créer</Button>
+        <Button
+          variant="outline"
+          className="ml-auto"
+          onClick={() => {
+            toggleModal.toggleModal();
+          }}
+        >
           Annuler
         </Button>
       </CardFooter>
