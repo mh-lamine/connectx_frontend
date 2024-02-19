@@ -7,9 +7,18 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import PropTypes from "prop-types";
+import { useState } from "react";
+import DeleteModal from "./DeleteModal";
 
-export default function AppointmentsTable({appointments}) {
-  
+export default function AppointmentsTable({ appointments }) {
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [id, setId] = useState("");
+
+  const toggleDeleteModal = (id) => {
+    setDeleteModal(!deleteModal);
+    id && setId(id);
+  };
+
   return (
     <div className="p-4">
       <Table>
@@ -24,7 +33,10 @@ export default function AppointmentsTable({appointments}) {
         <TableBody>
           {appointments.map((appointment) => {
             return (
-              <TableRow key={appointment._id} >
+              <TableRow
+                key={appointment._id}
+                onClick={() => toggleDeleteModal(appointment._id)}
+              >
                 <TableCell className="font-medium">
                   {appointment.name}
                 </TableCell>
@@ -36,6 +48,11 @@ export default function AppointmentsTable({appointments}) {
           })}
         </TableBody>
       </Table>
+      {deleteModal && (
+        <div className="absolute top-0 left-0 w-screen h-screen bg-slate-100 flex justify-center items-center bg-opacity-90">
+          <DeleteModal id={id} toggleDeleteModal={toggleDeleteModal} />
+        </div>
+      )}
     </div>
   );
 }

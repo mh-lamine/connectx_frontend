@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import AddModal from "./components/AddModal";
 import AppointmentsTable from "./components/AppointmentsTable";
 import { Button } from "@/components/ui/button";
-import useFetch from "./customHook/useFetch";
+import { Loader2 } from "lucide-react";
+import useFetch from "./customHooks/useFetch";
 
 function App() {
   const [appointments, setAppointments] = useState([]);
@@ -16,7 +17,15 @@ function App() {
     if (data) return setAppointments(data);
   }, [data]);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading)
+    return (
+      <div className="absolute top-0 left-0 w-screen h-screen bg-slate-100 flex justify-center items-center bg-opacity-90">
+        <Button disabled>
+          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+          Chargement
+        </Button>
+      </div>
+    );
 
   if (error) return <p>Error: {error.message}</p>;
 
