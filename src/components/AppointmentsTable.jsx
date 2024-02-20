@@ -32,6 +32,7 @@ export default function AppointmentsTable({ appointments }) {
         </TableHeader>
         <TableBody>
           {appointments.map((appointment) => {
+            // console.log(moment(appointment.date).format("DD/MM/YYYY"));
             return (
               <TableRow
                 key={appointment._id}

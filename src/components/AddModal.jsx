@@ -55,7 +55,7 @@ export default function AddModal({toggleAddModal}) {
       <CardContent>
         <Label>Nom</Label>
         <Input name="name" value={field.name} onChange={handleChange}></Input>
-        <Label>Service</Label>
+        <Label>Prestation</Label>
         <Input
           name="service"
           value={field.service}

@@ -25,7 +25,7 @@ function App() {
     };
 
     fetchData();
-  });
+  }, [appointments]);
 
   if (loading)
     return (
