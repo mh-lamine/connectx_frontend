@@ -3,19 +3,29 @@ import AddModal from "./components/AddModal";
 import AppointmentsTable from "./components/AppointmentsTable";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
-import useFetch from "./customHooks/useFetch";
 
 function App() {
   const [appointments, setAppointments] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
   const [addModal, setAddModal] = useState(false);
 
-  const { data, loading, error } = useFetch(
-    "http://localhost:3000/appointments"
-  );
-
   useEffect(() => {
-    if (data) return setAppointments(data);
-  }, [data]);
+    const fetchData = async () => {
+      try {
+        const response = await fetch("http://localhost:3000/appointments");
+        const jsonData = await response.json();
+        setAppointments(jsonData);
+        setLoading(false);
+      } catch (error) {
+        setError(error);
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  });
 
   if (loading)
     return (
