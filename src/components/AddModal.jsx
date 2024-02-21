@@ -11,17 +11,20 @@ import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { useState } from "react";
 import PropTypes from "prop-types";
+import { useToast } from "./ui/use-toast";
 
-export default function AddModal({toggleAddModal}) {
+export default function AddModal({ toggleAddModal }) {
   const [field, setField] = useState({ name: "", service: "" });
+  const { toast } = useToast();
 
   const handleChange = (e) => {
-    setField({ ...field, [e.target.name]: e.target.value });
+    console.log(e.target.id);
+    setField({ ...field, [e.target.id]: e.target.value });
   };
 
   const clearFields = () => {
-    setField([]);
-  }
+    setField({ name: "", service: "" });
+  };
 
   const createApppointment = async () => {
     try {
@@ -34,11 +37,18 @@ export default function AddModal({toggleAddModal}) {
       });
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        toast({
+          description:
+            "Remplissez tous les champs pour créer une nouvelle réservation.",
+        });
+        return;
       }
 
       clearFields();
       toggleAddModal();
+      toast({
+        description: "Nouveau rendez-vous ajouté !",
+      });
     } catch (error) {
       console.error("Error:", error);
     }
@@ -53,17 +63,33 @@ export default function AddModal({toggleAddModal}) {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <Label>Nom</Label>
-        <Input name="name" value={field.name} onChange={handleChange}></Input>
-        <Label>Prestation</Label>
+        <Label htmlFor="name">Nom</Label>
         <Input
-          name="service"
+          type="name"
+          id="name"
+          placeholder="Nom"
+          autoComplete="off"
+          value={field.name}
+          onChange={handleChange}
+        ></Input>
+        <Label htmlFor="service">Prestation</Label>
+        <Input
+          type="service"
+          id="service"
+          placeholder="Prestation"
+          autoComplete="off"
           value={field.service}
           onChange={handleChange}
         ></Input>
       </CardContent>
       <CardFooter>
-        <Button onClick={() => createApppointment()}>Créer</Button>
+        <Button
+          onClick={() => {
+            createApppointment();
+          }}
+        >
+          Créer
+        </Button>
         <Button
           variant="outline"
           className="ml-auto"
