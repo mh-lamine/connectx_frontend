@@ -11,9 +11,12 @@ import {
 export default function DeleteModal({ id, toggleDeleteModal }) {
   const deleteAppointment = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/appointments/${id}`, {
-        method: "DELETE",
-      });
+      const response = await fetch(
+        `https://connectx-backend-406f.onrender.com/appointments/${id}`,
+        {
+          method: "DELETE",
+        }
+      );
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);

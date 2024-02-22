@@ -28,13 +28,16 @@ export default function AddModal({ toggleAddModal }) {
 
   const createApppointment = async () => {
     try {
-      const response = await fetch("http://localhost:3000/appointments", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(field),
-      });
+      const response = await fetch(
+        "https://connectx-backend-406f.onrender.com/appointments",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(field),
+        }
+      );
 
       if (!response.ok) {
         toast({
