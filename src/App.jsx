@@ -14,7 +14,9 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:3000/appointments");
+        const response = await fetch(
+          "https://connectx-backend-406f.onrender.com/appointments"
+        );
         const jsonData = await response.json();
         setAppointments(jsonData);
         setLoading(false);
