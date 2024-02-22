@@ -18,7 +18,6 @@ export default function AddModal({ toggleAddModal }) {
   const { toast } = useToast();
 
   const handleChange = (e) => {
-    console.log(e.target.id);
     setField({ ...field, [e.target.id]: e.target.value });
   };
 
